@@ -38,7 +38,7 @@ namespace Linear
 						for (int j = 1; j < n - 1; j++)
 							if (j != i) var += (mtx[i][j] * y[j]);
 
-						y[i] = (f(i)*h*h - var) / mtx[i][i];
+						y[i] = (f(i) * h * h - var) / mtx[i][i];
 					}
 				} while (!converge(temp));
 				return y;
@@ -63,6 +63,32 @@ namespace Linear
 				x = int(x * okr + 0.5) / double(okr);
 
 				return x;
+			}
+			virtual const Vector& getSolutionsAsync()
+			{
+				Vector temp;
+				double norm;
+				do
+				{
+					norm = 0.0;
+#pragma omp parallel for
+					for (int i = 1; i < n - 1; i++)
+					{
+						double var = 0.0;
+						for (int j = 1; j < n - 1; j++)
+						{
+							if (j != i) var += (mtx[i][j] * y[j]);
+						}
+						y[i] = (f(i) * h * h - var) / mtx[i][i];
+						double diff = fabs(y[i] - temp[i]);
+#pragma omp critical
+						{
+							if (diff > norm) norm = diff;
+						}
+						temp[i] = y[i];
+					}
+				} while (norm > EPS);
+				return y;
 			}
 		};
 	} // ConcreteIterative

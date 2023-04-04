@@ -1,6 +1,7 @@
 #pragma once
 #include <iostream>
 #include <array>
+#include <omp.h>
 
 #define DEBUG_LIB
 // NumMethods
@@ -12,7 +13,7 @@
 #include "NumMethods/LinearEquations/Iterative/Jacobi.h"
 #include "NumMethods/LinearEquations/Iterative/UpRelaxation.h"
 #include"NumMethods/LinearEquations/Iterative/DownRelaxtion.h"
-#include "NumMethods/LinearEquations/Iterative/GreatDescent.h"
+//#include "NumMethods/LinearEquations/Iterative/GreatDescent.h"
 
 //Kursach
 #include"Kursach/Config2.0.h"

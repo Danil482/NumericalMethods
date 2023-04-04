@@ -19,8 +19,8 @@ namespace UnitTests
 
 			using Linear::h; using Linear::u;
 			std::cout << "ih \t\t yi \t\t u(ih) \t\t |yi-u(ih)|\n";
-			for(int i=0; i<Linear::n; i++)
-				std::cout<<i*h<<"\t\t"<<y[i]<<"\t\t"<<u(i*h)<<"\t\t"<<fabs(y[i]-u(i*h))<<'\n';
+			for (int i = 0; i < Linear::n; i++)
+				std::cout << i * h << "\t\t" << y[i] << "\t\t" << u(i * h) << "\t\t" << fabs(y[i] - u(i * h)) << '\n';
 
 			std::cout << "******Thomas test end************\n\n";
 		}
@@ -98,7 +98,7 @@ namespace UnitTests
 
 			std::cout << "******Jacobi test end************\n\n";
 		}
-		static void testGreatDescent()
+		/*static void testGreatDescent()
 		{
 			std::cout << "******Great Descent test start******\n";
 
@@ -115,6 +115,44 @@ namespace UnitTests
 				std::cout << i * h << "\t\t" << y[i] << "\t\t" << u(i * h) << "\t\t" << fabs(y[i] - u(i * h)) << '\n';
 
 			std::cout << "******Great Descent test end********\n\n";
+		}*/
+
+		static void testDownRelaxtionAsync()
+		{
+			std::cout << "******DownRelaxationAsync test start******\n";
+
+			Linear::ConcreteIterative::DownRelaxation method;
+			Linear::Matrix mtx = method.getMatrix();
+			std::cout << mtx << '\n';
+
+			Linear::Vector y = method.getSolutionsAsync();
+			std::cout << "Solution: " << y << '\n';
+
+			using Linear::h; using Linear::u;
+			std::cout << "ih\t\tyi\t\tu(ih)\t\t|yi-u(ih)|\n";
+			for (int i = 0; i < Linear::n; i++)
+				std::cout << i * h << "\t\t" << y[i] << "\t\t" << u(i * h) << "\t\t" << fabs(y[i] - u(i * h)) << '\n';
+
+			std::cout << "******DownRelaxationAsync test end********\n\n";
+		}
+
+		static void testSeidelAsync()
+		{
+			std::cout << "******SeidelAsync test start**********\n";
+
+			Linear::ConcreteIterative::Seidel method;
+			Linear::Matrix mtx = method.getMatrix();
+			std::cout << mtx << '\n';
+
+			Linear::Vector y = method.getSolutionsAsync();
+			std::cout << "Solution: " << y << '\n';
+
+			using Linear::h; using Linear::u;
+			std::cout << "ih\t\tyi\t\tu(ih)\t\t|yi-u(ih)|\n";
+			for (int i = 0; i < Linear::n; i++)
+				std::cout << i * h << "\t\t" << y[i] << "\t\t" << u(i * h) << "\t\t" << fabs(y[i] - u(i * h)) << '\n';
+
+			std::cout << "******SeidelAsync test end************\n\n";
 		}
 	};
 } // UnitTests
